@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const path = require('path');
 const multer = require("multer");
-//const XLSX = require('xlsx');
+const XLSX = require('xlsx');
 
 const router = Router();
 
-//const Clientes = require("../models/clientes");
+const Clientes = require("../models/clientes");
 
 let storage = multer.diskStorage({
    destination:(req, file, cb) => {
@@ -29,14 +29,11 @@ const upload = multer({
 
 router.post('/upload', upload.single('file'), async (req, res) => {
 
-   var filePath = path.resolve(__dirname, req.file.fieldname);
-
-   return filePath;
-
-   /*
-   try {
+      //const urlFiles = ('../files/'+req.file.filename);
+      var filePath = path.resolve(__dirname,'../files/'+req.file.filename);
 
       var workbook = XLSX.readFile(filePath);
+
       var sheet_name_list = workbook.SheetNames;
 
       const jsonString = JSON.stringify(
@@ -51,19 +48,12 @@ router.post('/upload', upload.single('file'), async (req, res) => {
          try {
             await Clientes.insertMany(meetings);
             res.status(200).json("Los datos se incorporaron correctamente");
-            process.exit();
          } catch(err) {
             res.status(400).json(err.message);
-            process.exit();
          }
       };
 
       loadMeetings();
-
-   } catch (err) {
-      res.status(500).json({ message: err.message });
-   }
-   */
 
 });
 
