@@ -18,6 +18,8 @@ app.use(cors());
 const wwwPath = path.join(__dirname, "www");
 app.use("/", express.static(wwwPath));
 
+app.use("/api/files", require("./routes/upload"));
+
 // start server
 app.set("port", process.env.PORT || 4000);
 app.listen(app.get("port"), () => {
