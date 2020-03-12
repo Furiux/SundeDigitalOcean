@@ -24,9 +24,10 @@ app.use(express.json());
 app.use(cors());
 const wwwPath = path.join(__dirname, "www");
 app.use("/", express.static(wwwPath));
-app.use("/api/files", require("./routes/upload")); // start server
+app.use("/api/files", require("./routes/upload"));
+app.use("/api/clientes", require("./routes/clientes")); // start server
 
-app.set("port", process.env.PORT || 4000);
+app.set("port", process.env.PORT || 3002);
 app.listen(app.get("port"), () => {
   console.log("Server on PORT", app.get("port"));
 });

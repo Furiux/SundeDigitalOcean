@@ -5,7 +5,8 @@ const ClientesSchema = new Schema({
     type: String
   },
   RazonSocial: {
-    type: String
+    type: String,
+    required: true,
   },
   Domicilio: {
     type: String

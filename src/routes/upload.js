@@ -29,31 +29,38 @@ const upload = multer({
 
 router.post('/upload', upload.single('file'), async (req, res) => {
 
-      //const urlFiles = ('../files/'+req.file.filename);
-      var filePath = path.resolve(__dirname,'../files/'+req.file.filename);
+      try {
+         
+         var filePath = path.resolve(__dirname,'../files/'+req.file.filename);
 
-      var workbook = XLSX.readFile(filePath);
+         var workbook = XLSX.readFile(filePath);
 
-      var sheet_name_list = workbook.SheetNames;
+         var sheet_name_list = workbook.SheetNames;
 
-      const jsonString = JSON.stringify(
-            XLSX.utils.sheet_to_json(
-               workbook.Sheets[sheet_name_list[0]]
-            )
-      )
+         const jsonString = JSON.stringify(
+               XLSX.utils.sheet_to_json(
+                  workbook.Sheets[sheet_name_list[0]]
+               )
+         )
 
-      const meetings = JSON.parse(jsonString);
+         const meetings = JSON.parse(jsonString);
+         
+         console.log(meetings)
 
-      async function loadMeetings() {
-         try {
-            await Clientes.insertMany(meetings);
-            res.status(200).json("Los datos se incorporaron correctamente");
-         } catch(err) {
-            res.status(400).json(err.message);
-         }
-      };
+         async function loadMeetings() {
+            try {
+               await Clientes.insertMany(meetings);
+               res.status(200).json("Los datos se importaron correctamente.");
+            } catch(err) {
+               res.status(400).json("No fue posible realizar la importación.");
+            }
+         };
 
-      loadMeetings();
+         loadMeetings();
+
+      } catch (err) {
+         res.status(500).json(err.message);
+      }
 
 });
 
