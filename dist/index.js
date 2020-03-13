@@ -24,11 +24,14 @@ app.use(express.json());
 app.use(cors());
 const wwwPath = path.join(__dirname, "www");
 app.use("/", express.static(wwwPath));
+/*
 app.use("/perfil", express.static(wwwPath));
 app.use("/dashboard", express.static(wwwPath));
 app.use("/dashboard-clientes", express.static(wwwPath));
 app.use("/dashboard-productos", express.static(wwwPath));
 app.use("/dashboard-precios", express.static(wwwPath));
+*/
+
 app.use("/api/files", require("./routes/upload"));
 app.use("/api/clientes", require("./routes/clientes")); // start server
 

@@ -1,10 +1,11 @@
 const { Router } = require('express');
+const cors = require('cors');
 
 const router = Router();
 
 const Clientes = require("../models/clientes");
 
-router.get('/all', async (req, res) => {
+router.get('/all', cors(), async (req, res) => {
     
     try {
 
