@@ -2,15 +2,15 @@
 
 const {
   Router
-} = require('express');
+} = require("express");
 
-const cors = require('cors');
+const cors = require("cors");
 
 const router = Router();
 
 const Clientes = require("../models/clientes");
 
-router.get('/all', cors(), async (req, res) => {
+router.get("/all", cors(), async (req, res) => {
   try {
     const data = await Clientes.find({}, {
       __v: 0

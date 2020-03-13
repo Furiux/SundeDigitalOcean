@@ -2,13 +2,13 @@
 
 const {
   Router
-} = require('express');
+} = require("express");
 
-const path = require('path');
+const path = require("path");
 
 const multer = require("multer");
 
-const XLSX = require('xlsx');
+const XLSX = require("xlsx");
 
 const router = Router();
 
@@ -16,10 +16,10 @@ const Clientes = require("../models/clientes");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './src/files/');
+    cb(null, "./dist/files/");
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({
@@ -28,18 +28,17 @@ const upload = multer({
     if (path.extname(file.originalname) == ".xlsx" || path.extname(file.originalname) == ".xls" || path.extname(file.originalname) == ".csv") {
       cb(null, true);
     } else {
-      return cb(new Error('Permite solamente los formatos .xls, .csv y .xlsx'));
+      return cb(new Error("Permite solamente los formatos .xls, .csv y .xlsx"));
     }
   }
 });
-router.post('/upload', upload.single('file'), async (req, res) => {
+router.post("/upload", upload.single("file"), async (req, res) => {
   try {
-    var filePath = path.resolve(__dirname, '../files/' + req.file.filename);
+    var filePath = path.resolve(__dirname, "../files/" + req.file.filename);
     var workbook = XLSX.readFile(filePath);
     var sheet_name_list = workbook.SheetNames;
     const jsonString = JSON.stringify(XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]));
     const meetings = JSON.parse(jsonString);
-    console.log(meetings);
 
     async function loadMeetings() {
       try {
@@ -50,7 +49,6 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       }
     }
 
-    ;
     loadMeetings();
   } catch (err) {
     res.status(500).json(err.message);

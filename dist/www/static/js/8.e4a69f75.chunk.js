@@ -1,0 +1,2 @@
+(this.webpackJsonpfrontend=this.webpackJsonpfrontend||[]).push([[8],{86:function(n,e,t){"use strict";t.r(e);var r=t(0),s=t.n(r);e.default=function(){return s.a.createElement("h1",null,"Precios")}}}]);
+//# sourceMappingURL=8.e4a69f75.chunk.js.map
