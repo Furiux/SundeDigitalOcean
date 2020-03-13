@@ -32,7 +32,7 @@ app.use("/dashboard-precios", express.static(wwwPath));
 app.use("/api/files", require("./routes/upload"));
 app.use("/api/clientes", require("./routes/clientes")); // start server
 
-app.set("port", process.env.PORT || 3002);
+app.set("port", process.env.PORT || 4000);
 app.listen(app.get("port"), () => {
   console.log("Server on PORT", app.get("port"));
 });
