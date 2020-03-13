@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/Productos.js"],"names":["Productos"],"mappings":"sGAAA,2BAQeA,UANG,WACd,OACI","file":"static/js/10.6cc18505.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst Productos = () => {\r\n    return (\r\n        <h1>Productos</h1>\r\n    );\r\n}\r\n \r\nexport default Productos;"],"sourceRoot":""}

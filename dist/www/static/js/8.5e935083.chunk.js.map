@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/Perfil.js"],"names":["About"],"mappings":"qGAAA,2BAQeA,UAND,WACV,OACI","file":"static/js/8.5e935083.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst About = () => {\r\n    return (\r\n        <h1>Perfil</h1>\r\n    );\r\n}\r\n \r\nexport default About;"],"sourceRoot":""}
