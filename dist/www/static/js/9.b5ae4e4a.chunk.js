@@ -1,2 +1,0 @@
-(this.webpackJsonpfrontend=this.webpackJsonpfrontend||[]).push([[9],{85:function(n,t,e){"use strict";e.r(t);var r=e(0),o=e.n(r);t.default=function(){return o.a.createElement("h1",null,"Productos")}}}]);
-//# sourceMappingURL=9.b5ae4e4a.chunk.js.map

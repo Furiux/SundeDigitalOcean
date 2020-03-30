@@ -21,10 +21,15 @@ app.use("/perfil", express.static(wwwPath));
 app.use("/dashboard", express.static(wwwPath));
 app.use("/dashboard-clientes", express.static(wwwPath));
 app.use("/dashboard-productos", express.static(wwwPath));
-app.use("/dashboard-precios", express.static(wwwPath));
+app.use("/dashboard-imagenes", express.static(wwwPath));
 
-app.use("/api/files", require("./routes/upload"));
+app.use("/api/filesClientes", require("./routes/uploadClientes"));
+app.use("/api/filesProductos", require("./routes/uploadProductos"));
+app.use("/api/imagenes", require("./routes/uploadImgProductos"));
 app.use("/api/clientes", require("./routes/clientes"));
+app.use("/api/productos", require("./routes/productos"));
+app.use("/api/usuarios", require("./routes/usuarios"));
+app.use("/api/favoritos", require("./routes/favoritos"));
 
 // start server
 app.set("port", process.env.PORT || 4000);

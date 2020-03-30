@@ -1,43 +1,46 @@
-const { Schema, model } = require("mongoose");
+"use strict";
 
-const ClientesSchema = new Schema({
-  Cta: {
+const {
+  Schema,
+  model
+} = require('mongoose');
+
+const ProductosSchema = new Schema({
+  Indice: {
     type: String,
     lowercase: true
   },
-  RazonSocial: {
-    type: String,
-    required: true,
-    lowercase: true
-  },
-  Domicilio: {
+  Orden: {
     type: String,
     lowercase: true
   },
-  CodigoPostal: {
+  Foto: {
     type: String,
     lowercase: true
   },
-  Localidad: {
+  Codigo: {
     type: String,
     lowercase: true
   },
-  Provincia: {
+  Producto: {
     type: String,
     lowercase: true
   },
-  Telefono: {
+  Detalle: {
     type: String,
     lowercase: true
   },
-  CUIT: {
+  Oferta: {
     type: String,
     lowercase: true
   },
-  IIBB: {
+  Rubro: {
+    type: String,
+    lowercase: true
+  },
+  SubRubro: {
     type: String,
     lowercase: true
   }
 });
-
-module.exports = model("Clientes", ClientesSchema);
+module.exports = model('Productos', ProductosSchema);

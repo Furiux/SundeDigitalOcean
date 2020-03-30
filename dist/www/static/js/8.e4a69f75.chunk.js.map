@@ -1,1 +1,0 @@
-{"version":3,"sources":["pages/Precios.js"],"names":["Precios"],"mappings":"qGAAA,2BAQeA,UANC,WACZ,OACI","file":"static/js/8.e4a69f75.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst Precios = () => {\r\n    return (\r\n        <h1>Precios</h1>\r\n    );\r\n}\r\n \r\nexport default Precios;"],"sourceRoot":""}
