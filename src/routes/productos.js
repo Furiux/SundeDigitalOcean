@@ -23,4 +23,91 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/find/:data", async (req, res) => {
+  
+  let busqueda = req.params.data;
+
+    try {
+      
+      const data = await Productos.aggregate([
+        {$match: { Producto: { $regex: busqueda.toLowerCase() } }},
+        {$group: { _id: { Producto: "$Producto", Foto: "$Foto"} }},
+      ]);
+
+      if(data.length === 0){
+        const rubro = await Productos.aggregate([
+          {$match: { SubRubro: { $regex: busqueda.toLowerCase() } }},
+          {$group: { _id: { Producto: "$Producto", Foto: "$Foto", SubRubro: "$SubRubro" } }},
+        ]);
+        res.status(200).json(rubro);
+      }else{
+        res.status(200).json(data);
+      }
+
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+
+});
+
+router.get("/subrubro", async (req, res) => {
+  try {
+    const data = await Productos.aggregate([
+      {$group: { _id: { SubRubro: "$SubRubro" } }},
+    ])
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.get("/producto/:data", async (req, res) => {
+  let busqueda = req.params.data;
+  try {
+    
+    // Si viene por el buscador
+    const data = await Productos.aggregate([
+      {$match: { Producto: { $regex: busqueda.toLowerCase() } }},
+      {$group: { _id: { Producto: "$Producto", Foto: "$Foto"} }},
+    ]);
+    
+    if(data.length === 0){
+      // Si viene con un subrubro seleccionado
+      const rubro = await Productos.aggregate([
+        {$match: { SubRubro: { $regex: busqueda.toLowerCase() } }},
+        {$group: { _id: { Producto: "$Producto", Foto: "$Foto", SubRubro: "$SubRubro" } }},
+      ]);
+      res.status(200).json(rubro);
+    }else{
+      res.status(200).json(data);
+    }
+
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.get("/global/:data", async (req, res) => {
+  let busqueda = req.params.data;
+  try {
+    const data = await Productos.aggregate([
+      {$match: { Producto: busqueda.toLowerCase() } },
+      {$group: { _id: { Producto: "$Producto", Foto: "$Foto", Rubro: "$Rubro", SubRubro: "$SubRubro" } }},
+    ]);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.get("/detalle/:data", async (req, res) => {
+  let busqueda = req.params.data;
+  try {
+    const data = await Productos.find({ Producto: busqueda.toLowerCase() });
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 module.exports = router;

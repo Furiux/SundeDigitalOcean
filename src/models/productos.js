@@ -1,14 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const ProductosSchema = new Schema({
-    Indice: {
-        type: String,
-        lowercase: true
-    },
-    Orden: {
-        type: String,
-        lowercase: true
-    },
     Foto: {
         type: String,
         lowercase: true
@@ -25,7 +17,7 @@ const ProductosSchema = new Schema({
         type: String,
         lowercase: true
     },
-    Oferta: {
+    Precio: {
         type: String,
         lowercase: true
     },

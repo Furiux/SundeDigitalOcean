@@ -10,6 +10,24 @@ const _ = require('underscore');
 
 const Usuarios = require('../models/usuarios');
 
+
+// Login Usuario
+router.post('/ravitLogin', async (req, res) => {
+
+    const { clave } = req.body;
+
+    try {
+
+        const usuario = await Usuarios.findOne( {clave: clave}, {auditoria:0} );
+        res.status(200).json('El codigo ingreso es correcto');
+        
+    } catch (err) {
+        res.status(400).json(err.message);
+    }
+
+});
+
+
 router.get("/all", async (req, res) => {
     try {
         const data = await Usuarios.find({}, { __v: 0 });

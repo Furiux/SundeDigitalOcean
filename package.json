@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Furiux/SundeDigitalOcean#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "core-js": "^3.6.4",
+    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -30,20 +30,20 @@
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.3",
+    "mongoose": "^5.9.13",
     "mongoose-float": "^1.0.4",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "rimraf": "^3.0.2",
     "round-to": "^4.1.0",
-    "underscore": "^1.9.2",
-    "xlsx": "^0.15.5"
+    "underscore": "^1.10.2",
+    "xlsx": "^0.15.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.6",
-    "@babel/node": "^7.8.4",
-    "@babel/preset-env": "^7.8.6",
-    "nodemon": "^2.0.2"
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "nodemon": "^2.0.3"
   }
 }

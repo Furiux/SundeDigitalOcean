@@ -11,7 +11,7 @@ const router = Router();
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./dist/images/"); // dist
+    cb(null, "./dist/www/static/img/"); // dist
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -23,11 +23,12 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     if (
       path.extname(file.originalname) == ".jpg" ||
+      path.extname(file.originalname) == ".jpeg" ||
       path.extname(file.originalname) == ".png"
     ) {
       cb(null, true);
     } else {
-      return cb(new Error("Permite solamente los formatos .jpg, .png"));
+      return cb(new Error("Permite solamente los formatos .jpg, .jpeg .png"));
     }
   }
 });
@@ -36,13 +37,10 @@ router.post("/importar", upload.array("file"), async (req, res) => {
   try {
     async function comprimir() {
       try {
-        await imagemin(["./dist/images/*.{jpg,png}"], { //dist
-          destination: "dist/build/images",
+        await imagemin(["./dist/www/static/img/*.{jpg,jpeg,png}"], { //dist
+          destination: "dist/www/static/images/", //dist
           plugins: [imageminMozjpeg(), imageminPngquant()]
         });
-        
-        //VER ACA - fs.unlink('./src/images');
-
         res.status(200).json("Las imagenes se comprimieron correctamente.");
       } catch (err) {
         res.status(400).json(err.message);

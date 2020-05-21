@@ -6,14 +6,13 @@ const {
 } = require("mongoose");
 
 const ClientesSchema = new Schema({
-  Cta: {
+  Cuenta: {
     type: String,
     lowercase: true
   },
   RazonSocial: {
     type: String,
-    required: true,
-    lowercase: true
+    required: true
   },
   Domicilio: {
     type: String,
@@ -35,11 +34,11 @@ const ClientesSchema = new Schema({
     type: String,
     lowercase: true
   },
-  CUIT: {
+  CondicionIVA: {
     type: String,
     lowercase: true
   },
-  IIBB: {
+  CUIT: {
     type: String,
     lowercase: true
   }
