@@ -16,7 +16,7 @@ const Productos = require("../models/productos");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./dist/files/"); // dist
+    cb(null, path.resolve(__dirname,"../files/"));
   },
   filename: (req, file, cb) => {
     cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));

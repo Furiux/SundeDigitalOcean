@@ -19,7 +19,7 @@ const imageminPngquant = require("imagemin-pngquant");
 const router = Router();
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./dist/www/static/img/"); // dist
+    cb(null, path.resolve(__dirname,"../www/static/img/"));
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);

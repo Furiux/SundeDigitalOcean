@@ -16,7 +16,7 @@ const Rubros = require("../models/rubros");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./dist/files/"); // dist
+    cb(null, path.resolve(__dirname,"../files/"));
   },
   filename: (req, file, cb) => {
     cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
