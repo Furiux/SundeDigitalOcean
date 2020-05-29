@@ -2,40 +2,31 @@ const { Schema, model } = require("mongoose");
 
 const ClientesSchema = new Schema({
   Cuenta: {
-    type: String,
-    lowercase: true
+    type: String
   },
   RazonSocial: {
-    type: String,
-    required: true
+    type: String
   },
   Domicilio: {
-    type: String,
-    lowercase: true
+    type: String
   },
   CodigoPostal: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Localidad: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Provincia: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Telefono: {
-    type: String,
-    lowercase: true
+    type: String
   },
   CondicionIVA: {
-    type: String,
-    lowercase: true
+    type: String
   },
   CUIT: {
-    type: String,
-    lowercase: true
+    type: String
   }
 });
 

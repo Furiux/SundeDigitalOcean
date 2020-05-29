@@ -4,8 +4,7 @@ const bcrypt = require('bcryptjs');
 const UsuariosSchema = new Schema({
     nombre: {
         type: String,
-        required: true,
-        lowercase: true
+        required: true
     },
     correo: {
         type: String,

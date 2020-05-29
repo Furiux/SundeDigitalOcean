@@ -7,32 +7,25 @@ const {
 
 const ProductosSchema = new Schema({
   Foto: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Codigo: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Producto: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Detalle: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Precio: {
-    type: String,
-    lowercase: true
+    type: String
   },
   Rubro: {
-    type: String,
-    lowercase: true
+    type: String
   },
   SubRubro: {
-    type: String,
-    lowercase: true
+    type: String
   }
 });
 module.exports = model('Productos', ProductosSchema);

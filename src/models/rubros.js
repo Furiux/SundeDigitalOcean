@@ -2,13 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const RubrosSchema = new Schema({
   Foto: {
-    type: String,
-    lowercase: true
+    type: String
   },
   SubRubro: {
     type: String,
     required: true,
-    lowercase: true
   }
 });
 
