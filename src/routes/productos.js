@@ -63,14 +63,14 @@ router.get("/subrubro", async (req, res) => {
 
 router.get("/producto/:data", async (req, res) => {
   let busqueda = req.params.data;
+  
   try {
-    
     // Si viene por el buscador
     const data = await Productos.aggregate([
       {$match: { Producto: { $regex: busqueda.toLowerCase() } }},
       {$group: { _id: { Producto: "$Producto", Foto: "$Foto"} }},
     ]);
-    
+
     if(data.length === 0){
       // Si viene con un subrubro seleccionado
       const rubro = await Productos.aggregate([
