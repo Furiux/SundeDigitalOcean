@@ -14,17 +14,21 @@ const imageminMozjpeg = require('imagemin-mozjpeg');
 
 const imageminPngquant = require('imagemin-pngquant');
 
-router.post("/compresion", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    (async () => {
-      const files = await imagemin(['images/*.{jpg,png}'], {
-        destination: 'build/images',
-        plugins: [imageminMozjpeg(), imageminPngquant()]
-      });
-      console.log(files); //=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
-    })();
+    async function comprimir() {
+      try {
+        await imagemin([path.resolve(__dirname, "./images/*.{jpg,jpeg,png}")], {
+          destination: path.resolve(__dirname, "./buid/images"),
+          plugins: [imageminMozjpeg(), imageminPngquant()]
+        });
+        res.status(200).json("Las imagenes se comprimieron correctamente.");
+      } catch (err) {
+        res.status(400).json(err.message);
+      }
+    }
 
-    res.status(200).json("OK");
+    comprimir();
   } catch (err) {
     res.status(500).json(err.message);
   }

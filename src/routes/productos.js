@@ -53,7 +53,7 @@ router.get("/find/:data", async (req, res) => {
 router.get("/subrubro", async (req, res) => {
   try {
     const data = await Productos.aggregate([
-      {$group: { _id: { SubRubro: "$SubRubro" } }},
+      {$group: { _id: { SubRubro: "$SubRubro" }}},
     ])
     res.status(200).json(data);
   } catch (err) {

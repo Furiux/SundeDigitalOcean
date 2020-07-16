@@ -10,24 +10,7 @@ const _ = require('underscore');
 
 const Usuarios = require('../models/usuarios');
 
-
-// Login Usuario
-router.post('/ravitLogin', async (req, res) => {
-
-    const { clave } = req.body;
-
-    try {
-
-        const usuario = await Usuarios.findOne( {clave: clave}, {auditoria:0} );
-        res.status(200).json('El codigo ingreso es correcto');
-        
-    } catch (err) {
-        res.status(400).json(err.message);
-    }
-
-});
-
-
+// Todos los usuarios
 router.get("/all", async (req, res) => {
     try {
         const data = await Usuarios.find({}, { __v: 0 });
@@ -47,18 +30,21 @@ router.post('/login', async (req, res) => {
 
         // verify correo
         const usuario = await Usuarios.findOne( {correo: user.correo}, {auditoria:0} );
-        if (!usuario) return res.status(400).json('El correo electronico ingreso es incorrecto');
+        if (!usuario) return res.status(200).json('La cuenta ingresada no esta registrada en nuestro sistema.');
+
+        // verify status
+        if (usuario.estado === 'solicitud') return res.status(200).send('La cuenta no fue aprobada, intente mas tarde.');
 
         // verify clave
         bcrypt.compare(user.clave, usuario.clave, (err, isMatch) => {
             if (!isMatch) {
                 // return
-                return res.status(400).json('La contraseña ingresada es incorrecta');
+                return res.status(200).send('La contraseña ingresada es incorrecta');
             } else {
                 // token
                 const token = jwt.sign({_id: user._id}, process.env.SECRET_TOKEN || 'tokentest');
                 // return
-                res.status(201).header('auth-token', token).json({ _id: usuario._id, token: token, nombre: usuario.nombre, estado: usuario.estado, rol: usuario.rol });
+                res.status(201).header('auth-token', token).json({ _id: usuario._id, nombre: usuario.nombre, estado: usuario.estado });
             }
         })
 
@@ -71,18 +57,21 @@ router.post('/login', async (req, res) => {
 // Register Usuario
 router.post('/register', async (req, res) => {
 
-    const { nombre, correo, clave, estado, rol } = req.body;
+    const { nombre, comercio, direccion, ciudad, telefono, provincia, radio1, radio2, correo, clave, estado, rol } = req.body;
 
     try {
 
+        // verify correo
+        const usuario = await Usuarios.findOne( {correo: correo}, {auditoria:0} );
+        if (usuario) return res.status(200).json('El correo ingresado ya existe en nuestra base de datos.');
+
+
         // Preparo la insersecion
-        const newUser = new Usuarios({ nombre, correo, clave, estado, rol });
+        const newUser = new Usuarios({ nombre, comercio, direccion, ciudad, telefono, provincia, radio1, radio2, correo, clave, estado, rol });
 
         // Encripto la clave
         newUser.clave = await newUser.encryptPass(newUser.clave);
 
-        console.log(newUser);
-        
         // Inserto un nuevo usuario
         const newUsuario = await newUser.save();
 
@@ -103,10 +92,9 @@ router.post('/me:id', async (req, res) => {
 
     let id = req.params.id;
 
-
 });
 
-// Actualizar
+// Actualizar Datos
 router.patch('/:id', async (req, res) => {
 
     let id = req.params.id;

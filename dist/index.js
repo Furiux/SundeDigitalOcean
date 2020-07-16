@@ -34,6 +34,7 @@ app.use("/api/filesClientes", require("./routes/uploadClientes"));
 app.use("/api/filesProductos", require("./routes/uploadProductos"));
 app.use("/api/filesRubros", require("./routes/uploadRubros"));
 app.use("/api/imagenes", require("./routes/uploadImgProductos"));
+app.use("/api/compresion", require("./routes/imagenes"));
 app.use("/api/clientes", require("./routes/clientes"));
 app.use("/api/productos", require("./routes/productos"));
 app.use("/api/rubros", require("./routes/rubros"));

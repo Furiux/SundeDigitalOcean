@@ -3,14 +3,34 @@
 const {
   Schema,
   model
-} = require('mongoose');
+} = require("mongoose");
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 const UsuariosSchema = new Schema({
   nombre: {
-    type: String,
-    required: true
+    type: String
+  },
+  comercio: {
+    type: String
+  },
+  direccion: {
+    type: String
+  },
+  ciudad: {
+    type: String
+  },
+  telefono: {
+    type: String
+  },
+  provincia: {
+    type: String
+  },
+  radio1: {
+    type: String
+  },
+  radio2: {
+    type: String
   },
   correo: {
     type: String,
@@ -42,4 +62,4 @@ UsuariosSchema.methods.encryptPass = async clave => {
   return bcrypt.hash(clave, salt);
 };
 
-module.exports = model('Usuarios', UsuariosSchema);
+module.exports = model("Usuarios", UsuariosSchema);

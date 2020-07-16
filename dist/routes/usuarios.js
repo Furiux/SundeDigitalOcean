@@ -14,25 +14,9 @@ const jwt = require('jsonwebtoken');
 
 const _ = require('underscore');
 
-const Usuarios = require('../models/usuarios'); // Login Usuario
+const Usuarios = require('../models/usuarios'); // Todos los usuarios
 
 
-router.post('/ravitLogin', async (req, res) => {
-  const {
-    clave
-  } = req.body;
-
-  try {
-    const usuario = await Usuarios.findOne({
-      clave: clave
-    }, {
-      auditoria: 0
-    });
-    res.status(200).json('El codigo ingreso es correcto');
-  } catch (err) {
-    res.status(400).json(err.message);
-  }
-});
 router.get("/all", async (req, res) => {
   try {
     const data = await Usuarios.find({}, {
@@ -61,12 +45,14 @@ router.post('/login', async (req, res) => {
     }, {
       auditoria: 0
     });
-    if (!usuario) return res.status(400).json('El correo electronico ingreso es incorrecto'); // verify clave
+    if (!usuario) return res.status(200).json('La cuenta ingresada no esta registrada en nuestro sistema.'); // verify status
+
+    if (usuario.estado === 'solicitud') return res.status(200).send('La cuenta no fue aprobada, intente mas tarde.'); // verify clave
 
     bcrypt.compare(user.clave, usuario.clave, (err, isMatch) => {
       if (!isMatch) {
         // return
-        return res.status(400).json('La contraseña ingresada es incorrecta');
+        return res.status(200).send('La contraseña ingresada es incorrecta');
       } else {
         // token
         const token = jwt.sign({
@@ -75,10 +61,8 @@ router.post('/login', async (req, res) => {
 
         res.status(201).header('auth-token', token).json({
           _id: usuario._id,
-          token: token,
           nombre: usuario.nombre,
-          estado: usuario.estado,
-          rol: usuario.rol
+          estado: usuario.estado
         });
       }
     });
@@ -90,6 +74,13 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   const {
     nombre,
+    comercio,
+    direccion,
+    ciudad,
+    telefono,
+    provincia,
+    radio1,
+    radio2,
     correo,
     clave,
     estado,
@@ -97,17 +88,30 @@ router.post('/register', async (req, res) => {
   } = req.body;
 
   try {
-    // Preparo la insersecion
+    // verify correo
+    const usuario = await Usuarios.findOne({
+      correo: correo
+    }, {
+      auditoria: 0
+    });
+    if (usuario) return res.status(200).json('El correo ingresado ya existe en nuestra base de datos.'); // Preparo la insersecion
+
     const newUser = new Usuarios({
       nombre,
+      comercio,
+      direccion,
+      ciudad,
+      telefono,
+      provincia,
+      radio1,
+      radio2,
       correo,
       clave,
       estado,
       rol
     }); // Encripto la clave
 
-    newUser.clave = await newUser.encryptPass(newUser.clave);
-    console.log(newUser); // Inserto un nuevo usuario
+    newUser.clave = await newUser.encryptPass(newUser.clave); // Inserto un nuevo usuario
 
     const newUsuario = await newUser.save(); // token
 
@@ -129,7 +133,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/me:id', async (req, res) => {
   let id = req.params.id;
-}); // Actualizar
+}); // Actualizar Datos
 
 router.patch('/:id', async (req, res) => {
   let id = req.params.id;
