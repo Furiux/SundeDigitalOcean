@@ -53,7 +53,7 @@ router.get("/find/:data", async (req, res) => {
 router.get("/subrubro", async (req, res) => {
   try {
     const data = await Productos.aggregate([
-      {$group: { _id: { SubRubro: "$SubRubro" }}},
+      {$group: { _id: { SubRubro: "$SubRubro" } }},
     ])
     res.status(200).json(data);
   } catch (err) {
@@ -67,8 +67,9 @@ router.get("/producto/:data", async (req, res) => {
   try {
     // Si viene por el buscador
     const data = await Productos.aggregate([
-      {$match: { Producto: { $regex: busqueda.toLowerCase() } }},
-      {$group: { _id: { Producto: "$Producto", Foto: "$Foto"} }},
+      { $match: { Producto: { $regex: busqueda.toLowerCase() } }},
+      { $group: { _id: { Producto: "$Producto", Foto: "$Foto"} }},
+      { $sort: { '_id.Producto': 1 } }
     ]);
 
     if(data.length === 0){
@@ -76,6 +77,7 @@ router.get("/producto/:data", async (req, res) => {
       const rubro = await Productos.aggregate([
         {$match: { SubRubro: { $regex: busqueda.toLowerCase() } }},
         {$group: { _id: { Producto: "$Producto", Foto: "$Foto", SubRubro: "$SubRubro" } }},
+        {$sort: { '_id.Producto': 1 } }
       ]);
       res.status(200).json(rubro);
     }else{

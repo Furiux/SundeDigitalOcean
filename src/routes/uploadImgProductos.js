@@ -11,7 +11,7 @@ const router = Router();
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.resolve(__dirname,"../www/static/img/"));
+    cb(null, path.resolve(__dirname,"../www/static/images/"));
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -34,13 +34,10 @@ const upload = multer({
 });
 
 router.post("/importar", upload.array("file"), async (req, res) => {
+
   try {
     async function comprimir() {
       try {
-        await imagemin(["./dist/www/static/img/*.{jpg,jpeg,png}"], { //dist
-          destination: "dist/www/static/images/", //dist
-          plugins: [imageminMozjpeg(), imageminPngquant()]
-        });
         res.status(200).json("Las imagenes se comprimieron correctamente.");
       } catch (err) {
         res.status(400).json(err.message);

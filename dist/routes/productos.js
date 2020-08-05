@@ -113,6 +113,10 @@ router.get("/producto/:data", async (req, res) => {
           Foto: "$Foto"
         }
       }
+    }, {
+      $sort: {
+        '_id.Producto': 1
+      }
     }]);
 
     if (data.length === 0) {
@@ -130,6 +134,10 @@ router.get("/producto/:data", async (req, res) => {
             Foto: "$Foto",
             SubRubro: "$SubRubro"
           }
+        }
+      }, {
+        $sort: {
+          '_id.Producto': 1
         }
       }]);
       res.status(200).json(rubro);
